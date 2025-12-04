@@ -11,6 +11,7 @@ export default function CardName() {
             width={160}
             height={160}
             className="object-cover"
+            loading="lazy"
           />
         </div>
 
