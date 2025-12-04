@@ -12,6 +12,7 @@ export default function CardProjects({ project, index }) {
         src={project.image}
         alt={project.title}
         className="w-full !h-[200px] object-cover"
+        loading="lazy"
       />
       <div className="pt-4 flex flex-1 flex-col gap-3 md:justify-between md:items-start">
         {/* Left: Title & Description */}
