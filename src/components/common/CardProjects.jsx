@@ -7,9 +7,11 @@ export default function CardProjects({ project, index }) {
       className="flex flex-col bg-[#e5ecf6] shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-6"
     >
       <img
+        width={200}
+        height={200}
         src={project.image}
         alt={project.title}
-        className="w-full h-[200px] object-cover"
+        className="w-full !h-[200px] object-cover"
       />
       <div className="pt-4 flex flex-1 flex-col gap-3 md:justify-between md:items-start">
         {/* Left: Title & Description */}
