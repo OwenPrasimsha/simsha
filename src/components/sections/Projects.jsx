@@ -51,7 +51,7 @@ export default function Projects() {
     >
       <h2 className="text-4xl font-bold text-gray-900 mb-8">Projects</h2>
 
-      <div className="overflow-hidden md:overflow-auto lg:overflow-hidden m-0 p-0 md:pl-[30px] md:pb-[30px] md:ml-[-30px] md:mb-[-30px]">
+      <div className="overflow-hidden md:overflow-auto lg:overflow-hidden m-0 p-0 pb-[30px] mb-[-30px] md:pl-[30px] md:ml-[-30px]">
         <div className="grid md:grid-cols-3 w-full md:w-[135%] lg:w-full gap-8">
           {projects.map((project, index) => (
             <CardProjects project={project} index={index} />
