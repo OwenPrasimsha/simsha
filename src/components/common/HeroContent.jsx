@@ -10,7 +10,7 @@ export default function HeroContent() {
       <div className="flex felx-wrap gap-4 mb-6">
         <ButtonLink
           variant="primary"
-          href="https://wa.me/1234567890"
+          href="https://wa.me/62812274183327"
           target="_blank"
         >
           Get in Touch
