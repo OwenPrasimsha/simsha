@@ -47,11 +47,11 @@ export default function Projects() {
   return (
     <section
       id="projects"
-      className="pt-[80px] lg:pt-[120px] px-4 max-w-[1180px] mx-auto"
+      className="pt-0 md:pt-[80px] lg:pt-[120px] px-4 max-w-[1180px] mx-auto"
     >
       <h2 className="text-4xl font-bold text-gray-900 mb-8">Projects</h2>
 
-      <div className="overflow-hidden md:overflow-auto lg:overflow-hidden p-0 md:pl-[30px] pb-[30px] ml-[-30px] mb-[-30px]">
+      <div className="overflow-hidden md:overflow-auto lg:overflow-hidden m-0 p-0 md:pl-[30px] md:pb-[30px] md:ml-[-30px] md:mb-[-30px]">
         <div className="grid md:grid-cols-3 w-full md:w-[135%] lg:w-full gap-8">
           {projects.map((project, index) => (
             <CardProjects project={project} index={index} />
