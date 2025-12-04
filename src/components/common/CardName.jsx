@@ -14,10 +14,10 @@ export default function CardName() {
           />
         </div>
 
-        <h2 className="text-2xl font-bold text-gray-800">
+        <p className="text-2xl font-bold text-gray-800">
           Owen
           <br /> Prasimsha
-        </h2>
+        </p>
         <span className="block mx-auto h-[2px] w-[50px] bg-[#295e90] my-4"></span>
         <p className="text-gray-500 uppercase tracking-[3px]">Web Developer</p>
       </div>
