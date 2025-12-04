@@ -1,11 +1,18 @@
+// import { StrictMode } from "react";
+import Header from "./components/common/Header";
+import Hero from "./components/sections/Hero";
+import Experience from "./components/sections/Experience";
+import Projects from "./components/sections/Projects";
+import Footer from "./components/common/Footer";
+
 function App() {
   return (
     <>
-      <div className="p-6 text-center">
-        <h1 className="text-2xl font-bold text-blue-600">
-          Hello Vite + React + Tailwind 🚀
-        </h1>
-      </div>
+      <Header />
+      <Hero />
+      <Projects />
+      <Experience />
+      <Footer />
     </>
   );
 }

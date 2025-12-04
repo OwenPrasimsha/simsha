@@ -1,0 +1,50 @@
+.toggle {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}
+
+.toggle span {
+  position: absolute;
+  height: 3px;
+  background: var(--black);
+  border-radius: 2px;
+  transition: 0.4s;
+}
+
+.toggle span:nth-child(1) {
+  width: 15px;
+  transform: translateY(-8px);
+}
+
+.toggle span:nth-child(2) {
+  width: 20px;
+  transform: translateY(0);
+}
+
+.toggle span:nth-child(3) {
+  width: 10px;
+  transform: translateY(8px);
+}
+
+.toggle.active span {
+  background: var(--white);
+}
+
+.toggle.active span:nth-child(1) {
+  width: 20px;
+  transform: rotate(45deg);
+}
+
+.toggle.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.toggle.active span:nth-child(3) {
+  width: 20px;
+  transform: rotate(-45deg);
+}
