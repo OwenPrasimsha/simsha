@@ -7,7 +7,7 @@ export default function HeroContent() {
         Hello
       </h1>
       <h2 className="text-xl text-gray-900 mb-6">Here' who I am & what I do</h2>
-      <div className="flex gap-4 mb-6">
+      <div className="flex felx-wrap gap-4 mb-6">
         <ButtonLink
           variant="primary"
           href="https://wa.me/1234567890"
