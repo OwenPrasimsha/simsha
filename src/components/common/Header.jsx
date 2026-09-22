@@ -1,5 +1,39 @@
-import { Sun, Moon } from "./icons";
+import { useEffect, useState } from "react";
+import { Menu, Sun, Moon, X } from "./icons";
+
+const links = [["About", "#about"], ["Projects", "#projects"], ["Exploring", "#exploring"], ["Contact", "#contact"]];
 
 export default function Header({ theme, onThemeChange }) {
-  return <header className="header"><div className="header-inner"><a className="logo" href="#top"><span className="logo-mark">S</span>Simsha.</a><nav className="nav"><a href="#about">About</a><a href="#projects">Projects</a><a href="#exploring">Exploring</a><a href="#contact">Contact</a><button className="theme-toggle" onClick={onThemeChange} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}>{theme === "light" ? <Moon /> : <Sun />}</button></nav><button className="theme-toggle mobile-theme" onClick={onThemeChange} aria-label="Toggle theme">{theme === "light" ? <Moon /> : <Sun />}</button></div></header>;
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const closeMenu = () => setIsMenuOpen(false);
+  const themeIcon = theme === "light" ? <Moon /> : <Sun />;
+
+  return <header className={`header ${isScrolled ? "is-scrolled" : ""}`}>
+    <div className="header-inner">
+      <a className="logo" href="#top" onClick={closeMenu}><span className="logo-mark">S</span>Simsha.</a>
+      <nav className="nav" aria-label="Primary navigation">
+        {links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
+        <button className="theme-toggle" onClick={onThemeChange} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}>{themeIcon}</button>
+      </nav>
+      <div className="mobile-controls">
+        <button className="theme-toggle" onClick={onThemeChange} aria-label={`Switch to ${theme === "light" ? "dark" : "light"} theme`}>{themeIcon}</button>
+        <button className="menu-toggle" onClick={() => setIsMenuOpen(true)} aria-label="Open navigation menu" aria-expanded={isMenuOpen}><Menu /></button>
+      </div>
+    </div>
+    <div className={`mobile-menu ${isMenuOpen ? "is-open" : ""}`} aria-hidden={!isMenuOpen}>
+      <div className="mobile-menu-panel">
+        <div className="mobile-menu-top"><span>Menu</span><button className="menu-toggle" onClick={closeMenu} aria-label="Close navigation menu"><X /></button></div>
+        <nav aria-label="Mobile navigation">{links.map(([label, href]) => <a key={href} href={href} onClick={closeMenu}>{label}<span>↗</span></a>)}</nav>
+      </div>
+    </div>
+  </header>;
 }

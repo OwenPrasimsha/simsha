@@ -1,10 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap");
 
-:root { --navy:#071D49; --snow:#FAFAF7; --lemon:#E7F75B; --muted:#61708d; --line:rgba(7,29,73,.14); }
-:root[data-theme="dark"] { --snow:#071D49; --navy:#FAFAF7; --muted:#c0cbe0; --line:rgba(250,250,247,.18); }
+:root { --bg:#F9FAFB; --surface:#FFFFFF; --text-primary:#071D49; --text-secondary:#4A5A7A; --accent:#D9A400; --accent-hover:#B8890A; --line:#E2E5EC; --navy:var(--text-primary); --snow:var(--surface); --lemon:var(--accent); --muted:var(--text-secondary); }
+:root[data-theme="dark"] { --bg:#071D49; --surface:#0E2A5E; --text-primary:#F7F7F2; --text-secondary:#B8C2D9; --accent:#F4D35E; --accent-hover:#FFE07A; --line:#1B3A73; --navy:var(--text-primary); --snow:var(--bg); --lemon:var(--accent); --muted:var(--text-secondary); }
 * { box-sizing:border-box; }
 html { scroll-behavior:smooth; }
-body { margin:0; background:var(--snow); color:var(--navy); font-family:"DM Sans",sans-serif; transition:background .25s,color .25s; }
+body { margin:0; background:var(--bg); color:var(--text-primary); font-family:"DM Sans",sans-serif; transition:background .25s,color .25s; }
 a { color:inherit; }
 .site-shell { overflow:hidden; }
 .section-heading { max-width:650px; }
@@ -14,7 +14,8 @@ a { color:inherit; }
 .about-grid { border-top:1px solid var(--line); display:grid; gap:36px; grid-template-columns:1fr 1fr; padding-top:30px; }
 .about-grid > p { font-size:1.2rem; line-height:1.65; margin:0; max-width:520px; }
 .skill-list { display:flex; flex-wrap:wrap; align-content:flex-start; gap:10px; }
-.skill-list span { border:1px solid var(--line); border-radius:999px; padding:9px 15px; font-size:.9rem; }
+.skill-list span { border:1px solid var(--line); border-radius:999px; padding:9px 15px; font-size:.9rem; transition:transform .2s ease,background .2s ease,border-color .2s ease,box-shadow .2s ease; }
+.skill-list span:hover { background:var(--accent); border-color:var(--accent); box-shadow:0 8px 20px color-mix(in srgb,var(--accent) 28%,transparent); color:var(--text-primary); transform:translateY(-3px) scale(1.04); }
 .exploring-section { border-top:1px solid var(--line); }
 .exploring-section .section-heading > p:last-child { color:var(--muted); font-size:1.08rem; line-height:1.6; }
 .exploring-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:40px; }
