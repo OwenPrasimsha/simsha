@@ -1,1 +1,16 @@
-:root { --white:#fff; --black:#000; }
+:root {
+  --white:#fff;
+  --black:#000;
+  --dark-bg:#071D49;
+  --dark-surface:#0E2A5E;
+  --light-bg:#F7F7F2;
+  --light-surface:#FFFFFF;
+  --text-dark-primary:#F7F7F2;
+  --text-dark-secondary:#B8C2D9;
+  --text-light-primary:#071D49;
+  --text-light-secondary:#4A5A7A;
+  --accent-primary:#F0B429;
+  --accent-hover:#D89A1F;
+  --line-dark:#1B3A73;
+  --line-light:#E2E5EC;
+}
