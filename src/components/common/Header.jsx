@@ -1,32 +1,35 @@
-// Header.jsx
-import { useState } from "react";
-import menuItems from "../../data/menu.json";
-import Menu from "./Menu";
-import MobileMenu from "./MobileMenu";
-import ToggleButton from "./ToggleButton";
+import { useEffect, useState } from "react";
+import { Menu, X } from "./icons";
+
+const links = [["About", "#about"], ["Projects", "#projects"], ["Exploring", "#exploring"], ["Contact", "#contact"]];
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  return (
-    <header className="shadow sticky top-0 z-50 bg-[#e5ecf6]">
-      <div className="container max-w-[1180px] mx-auto flex items-center justify-between py-[8px] px-[16px]">
-        <a
-          href="/"
-          className="text-xl font-bold text-black flex items-center gap-2"
-        >
-          <span class="inline-block w-3 h-3 bg-[#295e90] rounded-sm"></span>
-          Simsha.
-        </a>
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 16);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
-        <ToggleButton isOpen={isOpen} onClick={() => setIsOpen(!isOpen)} />
-
-        {/* Desktop Menu */}
-        <Menu items={menuItems} />
-
-        {/* popup mobile menu */}
-        <MobileMenu items={menuItems} isOpen={isOpen} setIsOpen={setIsOpen} />
+  const closeMenu = () => setIsMenuOpen(false);
+  return <header className={`header ${isScrolled ? "is-scrolled" : ""}`}>
+    <div className="header-inner">
+      <a className="logo" href="#top" onClick={closeMenu}><span className="logo-mark">S</span>Simsha.</a>
+      <nav className="nav" aria-label="Primary navigation">
+        {links.map(([label, href]) => <a key={href} href={href}>{label}</a>)}
+      </nav>
+      <div className="mobile-controls">
+        <button className="menu-toggle" onClick={() => setIsMenuOpen(true)} aria-label="Open navigation menu" aria-expanded={isMenuOpen}><Menu /></button>
       </div>
-    </header>
-  );
+    </div>
+    <div className={`mobile-menu ${isMenuOpen ? "is-open" : ""}`} aria-hidden={!isMenuOpen}>
+      <div className="mobile-menu-panel">
+        <div className="mobile-menu-top"><button className="menu-toggle" onClick={closeMenu} aria-label="Close navigation menu"><X /></button></div>
+        <nav aria-label="Mobile navigation">{links.map(([label, href]) => <a key={href} href={href} onClick={closeMenu}>{label}<span>↗</span></a>)}</nav>
+      </div>
+    </div>
+  </header>;
 }
