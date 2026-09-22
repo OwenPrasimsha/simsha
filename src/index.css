@@ -16,6 +16,7 @@
 .theme-toggle:hover,.menu-toggle:hover { background:var(--accent); color:var(--text-primary); transform:translateY(-2px); }
 .mobile-controls,.mobile-menu { display:none; }
 .hero { background:var(--navy); color:var(--snow); min-height:100vh; overflow:hidden; position:relative; }
+@media (max-width:1024px) { .hero { min-height:auto; } }
 .hero-orbit { position:absolute; right:-5vw; top:calc(8% - var(--parallax)); width:min(52vw,650px); aspect-ratio:1; border:1px solid color-mix(in srgb,var(--accent) 45%,transparent); border-radius:42% 58% 63% 37% / 46% 38% 62% 54%; animation:float-orbit 13s ease-in-out infinite; transform:rotate(-18deg); }
 .hero-orbit:before,.hero-orbit:after { content:""; position:absolute; border-radius:50%; filter:blur(1px); }
 .hero-orbit:before { inset:12%; background:radial-gradient(circle at 35% 30%,var(--accent),transparent 50%),linear-gradient(135deg,color-mix(in srgb,var(--accent) 68%,transparent),transparent 65%); opacity:.78; }
