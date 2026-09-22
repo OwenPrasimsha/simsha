@@ -9,58 +9,79 @@ function spriteFor(label) {
 }
 
 export default function Playground() {
-  const containerRef = useRef(null);
+  const sectionRef = useRef(null);
+  const canvasWrapRef = useRef(null);
   const canvasRef = useRef(null);
 
   useEffect(() => {
-    const container = containerRef.current;
+    const wrap = canvasWrapRef.current;
     const canvas = canvasRef.current;
-    if (!container || !canvas) return undefined;
-    let started = false;
+    if (!wrap || !canvas) return undefined;
+
     let engine;
     let render;
     let runner;
     let mouseConstraint;
+    let walls = [];
+    let resizeObserver;
 
-    const start = () => {
-      if (started) return;
-      started = true;
-      const width = container.clientWidth;
-      const height = container.clientHeight;
-      engine = Matter.Engine.create({ gravity: { x: 0, y: 0.9 } });
-      engine.positionIterations = 6;
-      engine.velocityIterations = 4;
-      render = Matter.Render.create({ element: container, canvas, engine, options: { width, height, wireframes: false, background: "transparent", pixelRatio: Math.min(window.devicePixelRatio || 1, 2) } });
+    const syncBounds = () => {
+      if (!engine || !render) return;
+      const width = wrap.clientWidth;
+      const height = wrap.clientHeight;
       const wall = 28;
-      const walls = [
+      Matter.Composite.remove(engine.world, walls);
+      walls = [
         Matter.Bodies.rectangle(width / 2, height + wall / 2, width, wall, { isStatic: true, render: { visible: false } }),
         Matter.Bodies.rectangle(-wall / 2, height / 2, wall, height, { isStatic: true, render: { visible: false } }),
         Matter.Bodies.rectangle(width + wall / 2, height / 2, wall, height, { isStatic: true, render: { visible: false } }),
       ];
-      const bodies = tools.map((label, index) => Matter.Bodies.rectangle(75 + (index % 4) * ((width - 110) / 3), -70 - Math.floor(index / 4) * 120, 82, 82, { chamfer: { radius: 18 }, restitution: 0.35, friction: 0.7, density: 0.002, render: { sprite: { texture: spriteFor(label), xScale: 0.86, yScale: 0.86 } } }));
-      Matter.Composite.add(engine.world, [...walls, ...bodies]);
+      Matter.Composite.add(engine.world, walls);
+      Matter.Render.setSize(render, width, height);
+    };
+
+    const start = () => {
+      const width = wrap.clientWidth;
+      const height = wrap.clientHeight;
+      engine = Matter.Engine.create({ gravity: { x: 0, y: 0.9 } });
+      engine.positionIterations = 6;
+      engine.velocityIterations = 4;
+      render = Matter.Render.create({ element: wrap, canvas, engine, options: { width, height, wireframes: false, background: "transparent", pixelRatio: Math.min(window.devicePixelRatio || 1, 2) } });
+      syncBounds();
+      const bodies = tools.map((label, index) => Matter.Bodies.rectangle(75 + (index % 4) * Math.max(90, (width - 150) / 3), 70 + Math.floor(index / 4) * 105, 82, 82, { chamfer: { radius: 18 }, restitution: 0.35, friction: 0.7, density: 0.002, render: { sprite: { texture: spriteFor(label), xScale: 0.86, yScale: 0.86 } } }));
+      Matter.Composite.add(engine.world, bodies);
       mouseConstraint = Matter.MouseConstraint.create(engine, { mouse: Matter.Mouse.create(canvas), constraint: { stiffness: 0.18, render: { visible: false } } });
       Matter.Composite.add(engine.world, mouseConstraint);
       render.canvas.setAttribute("aria-label", "Interactive physics playground with draggable technology icons");
       Matter.Render.run(render);
       runner = Matter.Runner.create();
       Matter.Runner.run(runner, engine);
+      resizeObserver = new ResizeObserver(syncBounds);
+      resizeObserver.observe(wrap);
     };
-    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { start(); observer.disconnect(); } }, { threshold: 0.22 });
-    observer.observe(container);
+
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        start();
+        observer.disconnect();
+      }
+    }, { threshold: 0.22 });
+    observer.observe(sectionRef.current);
+
     return () => {
       observer.disconnect();
+      resizeObserver?.disconnect();
       if (render) Matter.Render.stop(render);
       if (runner) Matter.Runner.stop(runner);
-      if (engine) Matter.Engine.clear(engine);
       if (mouseConstraint) Matter.Composite.remove(engine.world, mouseConstraint);
+      if (engine) Matter.Engine.clear(engine);
       if (render?.canvas) render.canvas.remove();
     };
   }, []);
 
-  return <section className="playground-section reveal" id="playground" ref={containerRef}>
+  return <section className="playground-section reveal" id="playground" ref={sectionRef}>
     <div className="section-heading"><p className="eyebrow">A little chaos</p><h2>Playground</h2><p>Drag them around — go ahead, I dare you.</p></div>
-    <div className="playground-canvas-wrap"><canvas ref={canvasRef} /></div>
+    <div className="playground-canvas-wrap" ref={canvasWrapRef}><canvas ref={canvasRef} /></div>
   </section>;
 }
 

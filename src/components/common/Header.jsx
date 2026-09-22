@@ -27,7 +27,7 @@ export default function Header() {
     </div>
     <div className={`mobile-menu ${isMenuOpen ? "is-open" : ""}`} aria-hidden={!isMenuOpen}>
       <div className="mobile-menu-panel">
-        <div className="mobile-menu-top"><span>Menu</span><button className="menu-toggle" onClick={closeMenu} aria-label="Close navigation menu"><X /></button></div>
+        <div className="mobile-menu-top"><button className="menu-toggle" onClick={closeMenu} aria-label="Close navigation menu"><X /></button></div>
         <nav aria-label="Mobile navigation">{links.map(([label, href]) => <a key={href} href={href} onClick={closeMenu}>{label}<span>↗</span></a>)}</nav>
       </div>
     </div>
